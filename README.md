@@ -2,6 +2,9 @@
 
 Admin dashboard of Geo Sense Plus 2
 
+## Main Dependencies
++ Quasar v2.0.0-beta.11
+
 ## Install the dependencies
 ```bash
 yarn

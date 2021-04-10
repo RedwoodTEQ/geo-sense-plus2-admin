@@ -11,11 +11,11 @@
           @click="toggleLeftDrawer"
         />
 
+        <!-- Todo: Environment variables-->
         <q-toolbar-title>
-          Quasar App
+          Geo Sense Plus2 Admin Sandbox
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <div>v{{ 0.01 }}</div>
       </q-toolbar>
     </q-header>
 
@@ -30,7 +30,7 @@
           header
           class="text-grey-8"
         >
-          Essential Links
+          Components
         </q-item-label>
 
         <EssentialLink
