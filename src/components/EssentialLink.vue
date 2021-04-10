@@ -4,6 +4,7 @@
     tag="a"
     target="_blank"
     :href="link"
+    dense
   >
     <q-item-section
       v-if="icon"

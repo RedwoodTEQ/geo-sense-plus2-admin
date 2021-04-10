@@ -6,6 +6,21 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/Index.vue') }]
   },
+  {
+    path: '/map',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Map.vue') }
+    ]
+  },
+  {
+    path: '/chart',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'chart01', component: () => import('pages/Chart01.vue') },
+      { path: 'chart02', component: () => import('pages/Chart02.vue') }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it

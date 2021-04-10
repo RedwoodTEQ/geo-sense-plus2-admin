@@ -1,5 +1,8 @@
 <template>
   <q-page class="row items-center justify-evenly">
+    Home page placeholder.
+  </q-page>
+  <q-page class="row items-center justify-evenly">
     <example-component
       title="Example component"
       active

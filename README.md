@@ -1,9 +1,12 @@
 # Geo Sense Plus 2 Admin Dashboard (geo-sense-plus2-admin)
 
-Admin dashboard of Geo Sense Plus 2
+Admin dashboard sandbox for Geo Sense Plus 2 
 
-## Main Dependencies
-+ Quasar v2.0.0-beta.11
+build by Quasar 2.0 beta, vue3, and typescript.
+
+## Main Dependencies and documentation
++ [Quasar v2.0.0-beta.11](https://next.quasar.dev/)
++ [Material Icon](https://fonts.google.com/icons?selected=Material+Icons&icon.query=public)
 
 ## Install the dependencies
 ```bash

@@ -26,6 +26,8 @@
       class="bg-grey-1"
     >
       <q-list>
+        <!-- Group Components-->
+        <!-- Todo: Collapse & expanding -->
         <q-item-label
           header
           class="text-grey-8"
@@ -33,11 +35,28 @@
           Components
         </q-item-label>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
+        <LeftDrawerItem
+            v-for="item in leftDrawerList"
+            :key="item.title"
+            v-bind="item"
         />
+
+        <!-- Group external links -->
+        <q-expansion-item
+          expand-separator
+          icon="link"
+          label="External links"
+          caption="Open in new page"
+        >
+          <!-- Indentation list by `class="q-pl-lg"` -->
+          <q-list class="q-pl-lg">
+            <EssentialLink
+                v-for="link in essentialLinks"
+                :key="link.title"
+                v-bind="link"
+            />
+          </q-list>
+        </q-expansion-item>
       </q-list>
     </q-drawer>
 
@@ -49,13 +68,21 @@
 
 <script lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
+import LeftDrawerItem from 'components/LeftDrawerItem.vue'
 
+// External links
 const linksList = [
   {
     title: 'Docs',
-    caption: 'quasar.dev',
+    caption: 'Quasar v2.0.0-beta',
     icon: 'school',
-    link: 'https://quasar.dev'
+    link: 'https://next.quasar.dev/'
+  },
+  {
+    title: 'Icon set',
+    caption: 'Material icon list',
+    icon: 'art_track',
+    link: 'https://fonts.google.com/icons?selected=Material+Icons&icon.query=public'
   },
   {
     title: 'Github',
@@ -95,14 +122,51 @@ const linksList = [
   }
 ]
 
+// Internal components
+const leftDrawerItems = [
+  {
+    title: 'Home',
+    caption: 'Home page',
+    icon: 'home',
+    to: '/'
+  },
+  {
+    title: 'Map',
+    caption: 'Map placeholder',
+    icon: 'place',
+    to: '/map'
+  },
+  {
+    // Expansion item
+    title: 'Chart',
+    icon: 'insights',
+    caption: 'Charts components',
+    items: [
+      // Child item
+      {
+        caption: 'Chart01 placeholder',
+        icon: 'leaderboard',
+        to: '/chart/chart01'
+      },
+      // Child item
+      {
+        caption: 'Chart02 placeholder',
+        icon: 'pie_chart',
+        to: '/chart/chart02'
+      }
+    ]
+  }
+]
+
 import { Vue, Options } from 'vue-class-component'
 
 @Options({
-  components: { EssentialLink }
+  components: { EssentialLink, LeftDrawerItem }
 })
 export default class MainLayout extends Vue {
   leftDrawerOpen = false;
   essentialLinks = linksList;
+  leftDrawerList = leftDrawerItems;
   toggleLeftDrawer () {
     this.leftDrawerOpen = !this.leftDrawerOpen
   }
