@@ -46,4 +46,4 @@ PR targeting to master branch triggers automatically preview deployment by
 Actions -> Deploy to Firebase hosting on PR.
 
 Reference to `.github/workflows/firebase-hosting-pull-request.yml` and 
-[PR #1](`https://github.com/RedwoodTEQ/geo-sense-plus2-admin/pull/1`)
+[PR #1](https://github.com/RedwoodTEQ/geo-sense-plus2-admin/pull/1)
