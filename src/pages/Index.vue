@@ -1,6 +1,7 @@
 <template>
   <q-page class="row items-center justify-evenly">
     Home page placeholder.
+    Test PR CI from github.
   </q-page>
   <q-page class="row items-center justify-evenly">
     <example-component
