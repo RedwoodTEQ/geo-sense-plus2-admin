@@ -144,15 +144,15 @@ const leftDrawerItems = [
     items: [
       // Child item
       {
-        caption: 'Chart01 placeholder',
+        caption: 'ECharts Vue',
         icon: 'leaderboard',
-        to: '/chart/chart01'
+        to: '/chart/echarts-vue'
       },
       // Child item
       {
-        caption: 'Chart02 placeholder',
+        caption: 'ECharts components',
         icon: 'pie_chart',
-        to: '/chart/chart02'
+        to: '/chart/echarts'
       }
     ]
   }

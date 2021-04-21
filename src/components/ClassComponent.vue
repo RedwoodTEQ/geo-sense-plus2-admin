@@ -16,6 +16,10 @@
 import { Vue, prop } from 'vue-class-component'
 import { Todo, Meta } from './models'
 
+/**
+ * About props design of `vue-class-component`, reference to
+ * https://github.com/vuejs/vue-class-component/issues/465
+ */
 class Props {
   readonly title!: string;
   readonly todos = prop<Todo[]>({ default: () => [] });

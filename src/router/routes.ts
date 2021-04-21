@@ -17,8 +17,8 @@ const routes: RouteRecordRaw[] = [
     path: '/chart',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: 'chart01', component: () => import('pages/Chart01.vue') },
-      { path: 'chart02', component: () => import('pages/Chart02.vue') }
+      { path: 'echarts-vue', component: () => import('pages/EChartVuePage.vue') },
+      { path: 'echarts', component: () => import('pages/EchartsPage.vue') }
     ]
   },
 

@@ -95,6 +95,10 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+
+    // // Always requests semi colon at the end. Get error otherwise.
+    // // https://eslint.org/docs/rules/semi
+    // 'semi': [2, 'always'],
   }
 }
