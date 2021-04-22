@@ -42,7 +42,7 @@ export default class EChartVuePage extends Vue {
         name: 'Traffic Sources',
         type: 'pie',
         radius: '55%',
-        center: ['50%', '60%'],
+        center: ['50%', '40%'],
         data: [
           { value: 335, name: 'Direct' },
           { value: 310, name: 'Email' },
@@ -74,6 +74,6 @@ export default class EChartVuePage extends Vue {
 
 <style scoped>
 .chart {
-  height: 100vh;
+  height: 800px;
 }
 </style>
