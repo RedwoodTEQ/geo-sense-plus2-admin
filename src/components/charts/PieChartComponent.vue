@@ -14,14 +14,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, prop } from 'vue-class-component'
+import { Vue, prop, Options } from 'vue-class-component'
 import { Meta } from '../models'
 import { ECharts } from 'boot/echarts'
 
 class Props {
-  readonly cardHeight = prop<number>({ default: 250 })
-  readonly theme!: string | undefined;
-  readonly options = prop<ECharts.EChartsOption>({
+  cardHeight = prop<number>({ default: 250 })
+  theme!: string | undefined;
+  options = prop<ECharts.EChartsOption>({
     default: {
       tooltip: {
         trigger: 'item',
@@ -44,8 +44,8 @@ class Props {
           name: 'Access source',
           type: 'pie',
           roseType: undefined,
-          radius: [0, '75%'],
-          center: ['50%', '25%'],
+          radius: [0, '70%'],
+          center: ['50%', '40%'],
           avoidLabelOverlap: false,
           itemStyle: {
             borderRadius: 10,
@@ -76,7 +76,6 @@ class Props {
           ]
         }
       ]
-
     }
   });
 
@@ -84,61 +83,12 @@ class Props {
   readonly active!: boolean;
 }
 
-export default class PieChartComponent extends Vue.with(Props) {
-  name = 'PieChartComponent'
-  theme: string | undefined = 'light'
-  options: ECharts.EChartsOption = {
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b}: {c} ({d}%)'
-    },
-    legend: {
-      top: 'bottom',
-      bottom: '5%',
-      left: 'center'
-    },
-    toolbox: {
-      show: true,
-      feature: {
-        dataView: { readOnly: false },
-        saveAsImage: {}
-      }
-    },
-    series: [
-      {
-        name: 'Access source',
-        type: 'pie',
-        roseType: undefined,
-        radius: ['40%', '70%'],
-        center: ['50%', '45%'],
-        avoidLabelOverlap: false,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: '#fff',
-          borderWidth: 2
-        },
-        label: {
-          show: false,
-          position: 'center'
-        },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: '40',
-            fontWeight: 'bold'
-          }
-        },
-        labelLine: {
-          show: false
-        },
-        data: [
-          { value: 100, name: 'No Data' }
-        ]
-      }
-    ]
-  }
+@Options({
+  name: 'PieChartComponent'
+})
 
-  pieChart: any = null
+export default class PieChartComponent extends Vue.with(Props) {
+  pieChart: ECharts.EChartsType | null = null
 
   mounted () {
     console.log('Echarts v5 pie charts component mounted >>')
@@ -152,7 +102,7 @@ export default class PieChartComponent extends Vue.with(Props) {
       ECharts.dispose(pieChartDOM)
       const theme = this.theme || 'light'
       this.pieChart = ECharts.init(pieChartDOM, theme)
-      this.pieChart.setOption(this.options)
+      this.pieChart?.setOption(this.options)
     } else {
       // TODO: throw error
     }
@@ -162,7 +112,6 @@ export default class PieChartComponent extends Vue.with(Props) {
 
   onResize () {
     if (this.pieChart) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       this.pieChart.resize()
     }
   }

@@ -19,9 +19,11 @@
 <script lang="ts">
 import { Vue, Options } from 'vue-class-component'
 
-@Options({})
-export default class EssentialLink extends Vue {
-  option: any = {
+@Options({
+  name: 'EChartVuePage'
+})
+export default class EChartVuePage extends Vue {
+  option: Record<string, unknown> = {
     title: {
       text: 'Traffic Sources',
       left: 'center'

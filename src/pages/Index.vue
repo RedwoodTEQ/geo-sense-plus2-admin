@@ -18,7 +18,8 @@ import ExampleComponent from 'components/ClassComponent.vue'
 import { Vue, Options } from 'vue-class-component'
 
 @Options({
-  components: { ExampleComponent }
+  components: { ExampleComponent },
+  name: 'IndexPage'
 })
 export default class PageIndex extends Vue {
   todos: Todo[] = [

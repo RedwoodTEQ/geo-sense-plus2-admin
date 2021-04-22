@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, prop } from 'vue-class-component'
+import { Vue, prop, Options } from 'vue-class-component'
 import { Todo, Meta } from './models'
 
 /**
@@ -26,6 +26,10 @@ class Props {
   readonly meta!: Meta;
   readonly active!: boolean;
 }
+
+@Options({
+  name: 'ClassComponent'
+})
 
 export default class ClassComponent extends Vue.with(Props) {
   clickCount = 0;
