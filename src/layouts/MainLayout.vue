@@ -164,7 +164,7 @@ import { Vue, Options } from 'vue-class-component'
   components: { EssentialLink, LeftDrawerItem },
   watch: {
     '$q.dark.isActive' (value) {
-      console.log(`[note] MainLayout >> Watch dark status: `, value ? 'dark' : 'light')
+      console.log(`[note] MainLayout >> Watch dark status: ${value ? 'dark' : 'light'}`)
     }
   }
 })

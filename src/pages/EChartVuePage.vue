@@ -23,7 +23,7 @@ import { Vue, Options } from 'vue-class-component'
   name: 'EChartVuePage',
   watch: {
     '$q.dark.isActive' (value) {
-      console.log(`[note] EChartVuePage >> Watch dark status: `, value ? 'dark' : 'light')
+      console.log(`[note] EChartVuePage >> Watch dark status: ${value ? 'dark' : 'light'} `)
     }
   }
 })
