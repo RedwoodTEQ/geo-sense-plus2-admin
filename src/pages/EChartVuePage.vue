@@ -20,7 +20,12 @@
 import { Vue, Options } from 'vue-class-component'
 
 @Options({
-  name: 'EChartVuePage'
+  name: 'EChartVuePage',
+  watch: {
+    '$q.dark.isActive' (value) {
+      console.log(`[note] EChartVuePage >> Watch dark status: `, value ? 'dark' : 'light')
+    }
+  }
 })
 export default class EChartVuePage extends Vue {
   option: Record<string, unknown> = {

@@ -15,6 +15,7 @@
         <q-toolbar-title>
           Geo Sense Plus2 Admin Sandbox
         </q-toolbar-title>
+        <q-btn flat round @click="$q.dark.toggle()" :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"/>
         <div>v{{ 0.01 }}</div>
       </q-toolbar>
     </q-header>
@@ -23,7 +24,6 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      class="bg-grey-1"
     >
       <q-list>
         <!-- Group Components-->
@@ -161,7 +161,12 @@ const leftDrawerItems = [
 import { Vue, Options } from 'vue-class-component'
 
 @Options({
-  components: { EssentialLink, LeftDrawerItem }
+  components: { EssentialLink, LeftDrawerItem },
+  watch: {
+    '$q.dark.isActive' (value) {
+      console.log(`[note] MainLayout >> Watch dark status: `, value ? 'dark' : 'light')
+    }
+  }
 })
 export default class MainLayout extends Vue {
   leftDrawerOpen = false;
