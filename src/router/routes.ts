@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
     path: '/map',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Map.vue') }
+      { path: '', component: () => import('pages/Leaflet.vue') }
     ]
   },
   {
