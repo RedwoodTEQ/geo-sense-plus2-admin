@@ -21,6 +21,7 @@ Leaflet demo page.
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
 import ExampleComponent from 'components/ClassComponent.vue'
+import { leafletLog } from '../utility/logger'
 import * as Leaflet from 'leaflet'
 
 @Options({
@@ -29,7 +30,8 @@ import * as Leaflet from 'leaflet'
 })
 export default class LeafletPage extends Vue {
   mounted () {
-    console.log('[Info] Init Leaflet component.')
+    leafletLog.info('Init Leaflet component.')
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
     const myMap: Leaflet.Map = Leaflet
       .map('mapid')

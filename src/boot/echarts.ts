@@ -7,6 +7,7 @@ import { boot } from 'quasar/wrappers'
 import VUEECharts, { THEME_KEY } from 'vue-echarts'
 import { use } from 'echarts/core'
 import * as ECharts from 'echarts'
+import { quasarLog } from '../utility/logger'
 
 // import ECharts modules manually to reduce bundle size
 import {
@@ -31,9 +32,9 @@ use([
 
 export default boot(({ app }) => {
   // Set `v-chart` component to be Echarts on app
-  console.log('echarts boot')
-  console.log('VUEECharts:', VUEECharts)
-  console.log('echarts:', ECharts)
+  quasarLog.info('Echarts boot')
+  quasarLog.debug({ msg: 'VUEECharts: ', data: VUEECharts })
+  quasarLog.debug({ msg: 'ECharts: ', data: ECharts })
 
   app.component('v-chart', VUEECharts)
 })
