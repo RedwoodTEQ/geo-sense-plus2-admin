@@ -27,7 +27,7 @@ import * as Leaflet from 'leaflet'
   components: { ExampleComponent },
   name: 'leafletPage'
 })
-export default class PageName extends Vue {
+export default class LeafletPage extends Vue {
   mounted () {
     console.log('[Info] Init Leaflet component.')
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
