@@ -20,6 +20,7 @@ export const quasarLog = new Category('Quasar')
 export const echartsLog = new Category('Echarts')
 export const vueEChartsLog = new Category('VUEECharts')
 export const leafletLog = new Category('Leaflet')
+export const pageLog = new Category('Page')
 
 // Optionally get a logger for a category, since 0.5.0 this is not necessary anymore, you can use the category itself to log.
 // export const log: CategoryLogger = CategoryServiceFactory.getLogger(cat)
