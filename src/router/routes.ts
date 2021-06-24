@@ -21,6 +21,13 @@ const routes: RouteRecordRaw[] = [
       { path: 'echarts', component: () => import('pages/EChartsPage.vue') }
     ]
   },
+  {
+    path: '/areas',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/AreasPage.vue') }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it

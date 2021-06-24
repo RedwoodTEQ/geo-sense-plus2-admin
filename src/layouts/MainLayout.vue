@@ -155,6 +155,12 @@ const leftDrawerItems = [
         to: '/chart/echarts'
       }
     ]
+  },
+  {
+    title: 'Areas List',
+    caption: 'Areas',
+    icon: 'place',
+    to: '/areas'
   }
 ]
 
