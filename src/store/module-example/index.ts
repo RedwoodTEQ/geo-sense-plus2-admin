@@ -13,4 +13,8 @@ const exampleModule: Module<ExampleStateInterface, StateInterface> = {
   state
 }
 
+export { mutationTypes } from './mutations'
+export { getterTypes } from './getters'
+export { actionTypes } from './actions'
+
 export default exampleModule

@@ -1,4 +1,5 @@
 import { store } from 'quasar/wrappers'
+// eslint-disable-next-line no-unused-vars
 import { InjectionKey } from 'vue'
 import {
   createStore,
@@ -6,8 +7,21 @@ import {
   useStore as vuexUseStore
 } from 'vuex'
 
-// import example from './module-example'
-// import { ExampleStateInterface } from './module-example/state';
+import example, {
+  mutationTypes as exampleMutationTypes,
+  getterTypes as exampleGetterTypes,
+  actionTypes as exampleActionTypes
+} from './module-example'
+import { ExampleStateInterface } from './module-example/state'
+
+export interface AreaData {
+  id: number;
+  name: string;
+  edgeID: string;
+  floorID: string;
+  assetsCount: number;
+  lastUpdated: string;
+}
 
 /*
  * If not building with SSR mode, you can
@@ -22,7 +36,9 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  example: unknown
+
+  // example: unknown
+  example: ExampleStateInterface
 }
 
 // provide typings for `this.$store`
@@ -38,7 +54,7 @@ export const storeKey: InjectionKey<VuexStore<StateInterface>> = Symbol('vuex-ke
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
-      // example
+      example
     },
 
     // enable strict mode (adds overhead!)
@@ -51,4 +67,28 @@ export default store(function (/* { ssrContext } */) {
 
 export function useStore () {
   return vuexUseStore(storeKey)
+}
+
+/**
+ * Export all mutations types in all modules
+ * todo: Do we need to export all mutations to app?
+ */
+export const mutationTypes = {
+  exampleModule: exampleMutationTypes
+}
+
+/**
+ * Export all getter types in all modules
+ * todo: Do we need to export all getter to app?
+ */
+export const getterTypes = {
+  exampleModule: exampleGetterTypes
+}
+
+/**
+ * Export all getter types in all modules
+ * todo: Do we need to export all getter to app? Maybe.
+ */
+export const actionTypes = {
+  exampleModule: exampleActionTypes
 }
