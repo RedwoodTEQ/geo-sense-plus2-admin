@@ -7,21 +7,25 @@ import {
   useStore as vuexUseStore
 } from 'vuex'
 
-import example, {
-  mutationTypes as exampleMutationTypes,
-  getterTypes as exampleGetterTypes,
-  actionTypes as exampleActionTypes
-} from './module-example'
-import { ExampleStateInterface } from './module-example/state'
+/** Area module */
+import areaModule, {
+  getterGlobalTypes as areaGetterGlobalTypes,
+  actionGlobalTypes as areaActionGlobalTypes
+} from './areaModule'
+import { AreaStateInterface } from './areaModule/state'
+export { AreaData } from './areaModule/state'
 
-export interface AreaData {
-  id: number;
-  name: string;
-  edgeID: string;
-  floorID: string;
-  assetsCount: number;
-  lastUpdated: string;
+/**
+ * Name mapping of modules in store
+ */
+export const ModuleMapping = {
+  area: 'area'
 }
+
+/**
+ * For type collection of action, mutation, getter and setter.
+ */
+export interface OperationTypes {[key: string]: string}
 
 /*
  * If not building with SSR mode, you can
@@ -38,7 +42,7 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
 
   // example: unknown
-  example: ExampleStateInterface
+  area: AreaStateInterface
 }
 
 // provide typings for `this.$store`
@@ -54,7 +58,7 @@ export const storeKey: InjectionKey<VuexStore<StateInterface>> = Symbol('vuex-ke
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
-      example
+      [ModuleMapping.area]: areaModule
     },
 
     // enable strict mode (adds overhead!)
@@ -62,33 +66,37 @@ export default store(function (/* { ssrContext } */) {
     strict: !!process.env.DEBUGGING
   })
 
+  console.log('DEBUG >> store index createStore >> ', Store)
+  console.trace()
+
   return Store
 })
 
+// Todo: Can not get store reference in computed methods of a Vue page/component. Look into AreasPage.vue.
 export function useStore () {
+  console.log('storeKey:', storeKey)
   return vuexUseStore(storeKey)
 }
 
 /**
  * Export all mutations types in all modules
- * todo: Do we need to export all mutations to app?
+ * Todo: Do we need to export all mutations to app? Maybe only export global mutations. Others mutations should be local, being called by global actions.
  */
-export const mutationTypes = {
-  exampleModule: exampleMutationTypes
+export const mutationTypes : {[key: string]: OperationTypes} = {
 }
 
 /**
  * Export all getter types in all modules
  * todo: Do we need to export all getter to app?
  */
-export const getterTypes = {
-  exampleModule: exampleGetterTypes
+export const getterTypes: {[key: string]: OperationTypes} = {
+  area: areaGetterGlobalTypes
 }
 
 /**
  * Export all getter types in all modules
  * todo: Do we need to export all getter to app? Maybe.
  */
-export const actionTypes = {
-  exampleModule: exampleActionTypes
+export const actionTypes: {[key: string]: OperationTypes} = {
+  area: areaActionGlobalTypes
 }

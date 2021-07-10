@@ -17,7 +17,7 @@
 import { Vue, Options } from 'vue-class-component'
 import { pageLog } from '../utility/logger'
 import { loadCollectionSnapshot } from '../lib/firebase'
-import { AreaData, mutationTypes, getterTypes } from '../store'
+import { AreaData, actionTypes, getterTypes, useStore } from '../store'
 
 @Options({
   name: 'AreasPage',
@@ -28,16 +28,21 @@ import { AreaData, mutationTypes, getterTypes } from '../store'
   },
   computed: {
     columns (): any {
+      // Todo: doesn't work.
+      const store = useStore()
+
+      console.log(store)
+
       // eslint-disable-next-line
-      return this.$store.state.example.areas.columns
+      return this.$store.state.area.columns
     },
     rows (): AreaData[] {
       // eslint-disable-next-line
-      return this.$store.state.example.areas.rows as AreaData[]
+      return this.$store.state.area.rows as AreaData[]
     },
     rowsCount (): number {
       // eslint-disable-next-line
-      return this.$store.getters[getterTypes.exampleModule.AREAS_COUNT]
+      return this.$store.getters[getterTypes.area.AREAS_COUNT]
     }
   }
 })
@@ -53,7 +58,7 @@ export default class AreasPage extends Vue {
   }
 
   addArea () {
-    this.$store.dispatch(mutationTypes.exampleModule.ADD_AREA, {
+    this.$store.dispatch(actionTypes.area.ADD_AREA, {
       id: 0,
       name: `added ${Math.random()}`,
       edgeID: '0092769BB9EA2F03',
