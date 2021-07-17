@@ -10,22 +10,15 @@ import {
 /** Area module */
 import areaModule, {
   getterGlobalTypes as areaGetterGlobalTypes,
-  actionGlobalTypes as areaActionGlobalTypes
+  actionGlobalTypes as areaActionGlobalTypes,
+  mutationGlobalTypes as areaMutationGlobalTypes
 } from './areaModule'
-import { AreaStateInterface } from './areaModule/state'
+import { State as AreaStateInterface } from './areaModule/state'
+import { OperationTypes } from './type'
+
 export { AreaData } from './areaModule/state'
 
-/**
- * Name mapping of modules in store
- */
-export const ModuleMapping = {
-  area: 'area'
-}
-
-/**
- * For type collection of action, mutation, getter and setter.
- */
-export interface OperationTypes {[key: string]: string}
+export * from './type'
 
 /*
  * If not building with SSR mode, you can
@@ -36,13 +29,22 @@ export interface OperationTypes {[key: string]: string}
  * with the Store instance.
  */
 
+/**
+ * Name mapping of all modules in root store
+ */
+export const moduleNames = {
+  area: areaModule.name
+}
+
+const areaSymbol = Symbol(moduleNames.area)
+
 export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
 
   // example: unknown
-  area: AreaStateInterface
+  [areaSymbol]: AreaStateInterface
 }
 
 // provide typings for `this.$store`
@@ -58,7 +60,7 @@ export const storeKey: InjectionKey<VuexStore<StateInterface>> = Symbol('vuex-ke
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
-      [ModuleMapping.area]: areaModule
+      [moduleNames.area]: areaModule
     },
 
     // enable strict mode (adds overhead!)
@@ -67,7 +69,6 @@ export default store(function (/* { ssrContext } */) {
   })
 
   console.log('DEBUG >> store index createStore >> ', Store)
-  console.trace()
 
   return Store
 })
@@ -83,6 +84,7 @@ export function useStore () {
  * Todo: Do we need to export all mutations to app? Maybe only export global mutations. Others mutations should be local, being called by global actions.
  */
 export const mutationTypes : {[key: string]: OperationTypes} = {
+  [areaModule.name]: areaMutationGlobalTypes
 }
 
 /**
@@ -90,7 +92,7 @@ export const mutationTypes : {[key: string]: OperationTypes} = {
  * todo: Do we need to export all getter to app?
  */
 export const getterTypes: {[key: string]: OperationTypes} = {
-  area: areaGetterGlobalTypes
+  [areaModule.name]: areaGetterGlobalTypes
 }
 
 /**
@@ -98,5 +100,5 @@ export const getterTypes: {[key: string]: OperationTypes} = {
  * todo: Do we need to export all getter to app? Maybe.
  */
 export const actionTypes: {[key: string]: OperationTypes} = {
-  area: areaActionGlobalTypes
+  [areaModule.name]: areaActionGlobalTypes
 }

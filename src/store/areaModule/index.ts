@@ -1,38 +1,53 @@
-import { Module } from 'vuex'
-import { StateInterface } from '../index'
-import state, { AreaStateInterface } from './state'
-import actions, { actionTypes } from './actions'
-import getters, { getterTypes } from './getters'
-import mutations from './mutations'
+import {
+  ActionImplementations, MutationImplementations, GetterImplementations,
+  AugmentedModule, OperationTypes
+} from '../index'
 
-const areaModule: Module<AreaStateInterface, StateInterface> = {
+import state, { State } from './state'
+import actions, { IActions } from './actions'
+import getters, { IGetters } from './getters'
+import mutations, { IMutations } from './mutations'
+
+const areaModule: AugmentedModule<State> = {
   namespaced: true,
   actions,
   getters,
   mutations,
-  state
+  state,
+  name: 'area'
+}
+
+type Implementations =
+  ActionImplementations<IActions, State> |
+  MutationImplementations<IMutations, State> |
+  GetterImplementations<IGetters, State>
+
+/**
+ * Generate global types by given implementations.
+ * @param implementations
+ */
+function generateGlobalTypes (implementations: Implementations) {
+  const globalTypes: OperationTypes = {}
+  Object.keys(implementations).forEach(key => {
+    globalTypes[key] = `${areaModule.name}/${key}`
+  })
+
+  return globalTypes
 }
 
 /**
- * Global types of actions in this module
+ * Global mutation types
  */
-export const actionGlobalTypes = Object.assign({}, actionTypes)
-Object.entries(actionGlobalTypes).forEach(entry => {
-  const key = entry[0]
-  const value = entry[1]
-  actionGlobalTypes[key] = `area/${value}`
-})
+export const mutationGlobalTypes = generateGlobalTypes(mutations)
 
 /**
- * Getter types of getter in this module
+ * Global action types
  */
-export const getterGlobalTypes = Object.assign({}, getterTypes)
-Object.entries(getterGlobalTypes).forEach(entry => {
-  const key = entry[0]
-  const value = entry[1]
-  getterGlobalTypes[key] = `area/${value}`
-})
+export const actionGlobalTypes = generateGlobalTypes(actions)
 
-export { mutationTypes } from './mutations'
+/**
+ * Global getter types
+ */
+export const getterGlobalTypes = generateGlobalTypes(getters)
 
 export default areaModule

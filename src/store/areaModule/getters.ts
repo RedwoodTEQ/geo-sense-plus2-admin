@@ -1,20 +1,32 @@
-import { GetterTree } from 'vuex'
-import { StateInterface, OperationTypes } from '../index'
-import { AreaStateInterface } from './state'
+import { GetterLocalTypes, GetterImplementations } from '../type'
+import { State } from './state'
 
-const getters: GetterTree<AreaStateInterface, StateInterface> = {
-  areasCount (state) {
-    return state.rows.length
-  }
+/**
+ * Define essential getters
+ */
+export interface IGetters <S = State> {
+  /**
+   * Get count of areas
+   * @param state {State}
+   * @typeParam R - Return type
+   * @typeParam S - Type of module state
+   * @constructor
+   */
+  AREAS_COUNT<R> (state: S): R,
 }
 
 /**
- * All getter types in this module
- * Be noted that they will be convert to global types in `./src/store/areaModule/index.ts#getterGlobalTypes` when exporting to global scope.
- * @see {@link getterGlobalTypes}
+ * Local types.
+ * Key and value have to be the same as corresponding key of {@link IGetter}. Otherwise get transpile error.
  */
-export const getterTypes: OperationTypes = {
-  AREAS_COUNT: 'areasCount'
+export const localTypes: GetterLocalTypes<IGetters> = {
+  AREAS_COUNT: 'AREAS_COUNT'
+}
+
+const getters: GetterImplementations<IGetters, State> = {
+  AREAS_COUNT (state): number {
+    return state?.rows?.length || 0
+  }
 }
 
 export default getters

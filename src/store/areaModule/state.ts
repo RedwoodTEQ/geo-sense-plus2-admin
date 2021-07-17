@@ -7,11 +7,6 @@ export interface AreaData {
   lastUpdated: string;
 }
 
-// export interface AreasMeta {
-//   columns: any;
-//   rows: AreaData[];
-// }
-
 export interface AreaStateInterface {
   columns: any;
   rows: AreaData[];
@@ -75,5 +70,10 @@ function state (): AreaStateInterface {
     ]
   }
 }
+
+/** Type of state of this module.
+ * It is used in definitions of getters, mutations and actions.
+ */
+export type State = ReturnType<typeof state>
 
 export default state

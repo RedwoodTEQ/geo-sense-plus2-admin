@@ -17,7 +17,7 @@
 import { Vue, Options } from 'vue-class-component'
 import { pageLog } from '../utility/logger'
 import { loadCollectionSnapshot } from '../lib/firebase'
-import { AreaData, actionTypes, getterTypes, useStore } from '../store'
+import { AreaData, actionTypes, getterTypes, moduleNames, useStore } from '../store'
 
 @Options({
   name: 'AreasPage',
@@ -34,11 +34,11 @@ import { AreaData, actionTypes, getterTypes, useStore } from '../store'
       console.log(store)
 
       // eslint-disable-next-line
-      return this.$store.state.area.columns
+      return this.$store.state[moduleNames.area].columns
     },
     rows (): AreaData[] {
       // eslint-disable-next-line
-      return this.$store.state.area.rows as AreaData[]
+      return this.$store.state[moduleNames.area].rows as AreaData[]
     },
     rowsCount (): number {
       // eslint-disable-next-line
