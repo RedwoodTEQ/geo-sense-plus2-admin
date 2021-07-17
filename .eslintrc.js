@@ -100,5 +100,8 @@ module.exports = {
     // // Always requests semi colon at the end. Get error otherwise.
     // // https://eslint.org/docs/rules/semi
     // 'semi': [2, 'always'],
+
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
   }
 }
