@@ -14,10 +14,20 @@
 </template>
 
 <script lang="ts">
-import { Vue, Options } from 'vue-class-component'
+import { Vue, Options, setup } from 'vue-class-component'
 import { pageLog } from '../utility/logger'
-import { loadCollectionSnapshot } from '../lib/firebase'
-import { AreaData, actionTypes, getterTypes, moduleNames, useStore } from '../store'
+import APIManager, {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  FirebaseOptions, RESTFullOptions,
+  DatabaseCategory
+} from '../lib/api-manager'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import {
+  AreaData, AreaStateInterface,
+  moduleNames,
+  areaGetterLocalTypes, areaActionLocalTypes,
+  getGlobalType, useStore
+} from '../store'
 
 @Options({
   name: 'AreasPage',
@@ -27,30 +37,74 @@ import { AreaData, actionTypes, getterTypes, moduleNames, useStore } from '../st
     }
   },
   computed: {
-    columns (): any {
-      // Todo: doesn't work.
-      const store = useStore()
-
-      console.log(store)
-
-      // eslint-disable-next-line
-      return this.$store.state[moduleNames.area].columns
-    },
+    // columns (): any {
+    //   const $store = useStore()
+    //   const areaState = $store.state[moduleNames.area] as AreaStateInterface
+    //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    //   return areaState.columns
+    // },
     rows (): AreaData[] {
-      // eslint-disable-next-line
-      return this.$store.state[moduleNames.area].rows as AreaData[]
+      const $store = useStore()
+      const areaState = $store.state[moduleNames.area] as AreaStateInterface
+      return areaState.rows
     },
     rowsCount (): number {
-      // eslint-disable-next-line
-      return this.$store.getters[getterTypes.area.AREAS_COUNT]
+      const $store = useStore()
+      const type = getGlobalType(areaGetterLocalTypes.AREAS_COUNT, moduleNames.area)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      return $store.getters[type] as number
     }
   }
 })
+
 export default class AreasPage extends Vue {
+  apiManager = new APIManager()
+  moduleName = moduleNames.area
+
+  /**
+   * Columns data from DB
+   * Alternative approach to create computed property, comparing to `@options#rows`
+   * Pro: This property could be referenced by props `q-table#columns`
+   * Con: Unknown issue?
+   * ref:https://github.com/vuejs/vue-class-component/issues/416
+   */
+  columns = setup(() => {
+    // FIXME: Can ont use `this.$store`
+    const store = useStore()
+    const areaState = store.state[moduleNames.area] as AreaStateInterface
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return areaState.columns
+  })
+
+  get store () {
+    return this.$store
+  }
+
   mounted () {
     pageLog.info('AreasPage mounted.')
 
-    loadCollectionSnapshot()
+    // // Can use `this.$store`
+    // console.log('this.$store:', this.$store)
+
+    const options: FirebaseOptions = {
+      category: DatabaseCategory.Firebase,
+      path: 'edges',
+      callbacks: {
+        onAdded: (id, data) => {
+          pageLog.info({ msg: 'Added', data: id })
+          console.log(data)
+        },
+        onModified: (id, data) => {
+          pageLog.info({ msg: 'Modified', data: id })
+          console.log(data)
+        },
+        onRemoved: (id, data) => {
+          pageLog.info({ msg: 'Removed', data: id })
+          console.log(data)
+        }
+      }
+    }
+    this.apiManager.fetch<DatabaseCategory.Firebase>(options)
   }
 
   init () {
@@ -58,7 +112,10 @@ export default class AreasPage extends Vue {
   }
 
   addArea () {
-    this.$store.dispatch(actionTypes.area.ADD_AREA, {
+    console.log('addArea >> moduleName: ', this.moduleName)
+
+    const type = getGlobalType(areaActionLocalTypes.ADD_AREA, moduleNames.area)
+    this.$store.dispatch(type, {
       id: 0,
       name: `added ${Math.random()}`,
       edgeID: '0092769BB9EA2F03',

@@ -1,7 +1,10 @@
 import { ActionContext } from 'vuex'
 import { StateInterface } from '../index'
 import { State, AreaData } from './state'
-import { ActionLocalTypes, ActionImplementations } from '../type'
+import {
+  ActionLocalTypes,
+  ActionImplementations
+} from '../type'
 import { localTypes as mutationLocalTypes, IMutations } from './mutations'
 
 /**

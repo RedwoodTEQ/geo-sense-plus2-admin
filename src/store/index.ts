@@ -3,20 +3,20 @@ import { store } from 'quasar/wrappers'
 import { InjectionKey } from 'vue'
 import {
   createStore,
-  Store as VuexStore,
-  useStore as vuexUseStore
+  useStore as vuexUseStore,
+  Store as VuexStore
 } from 'vuex'
 
 /** Area module */
-import areaModule, {
-  getterGlobalTypes as areaGetterGlobalTypes,
-  actionGlobalTypes as areaActionGlobalTypes,
-  mutationGlobalTypes as areaMutationGlobalTypes
-} from './areaModule'
+import areaModule from './areaModule'
 import { State as AreaStateInterface } from './areaModule/state'
-import { OperationTypes } from './type'
 
-export { AreaData } from './areaModule/state'
+export { AreaData, AreaStateInterface } from './areaModule/state'
+export {
+  GetterLocalTypes as areaGetterLocalTypes,
+  ActionLocalTypes as areaActionLocalTypes,
+  MutationLocalTypes as areaMutationLocalTypes
+} from './areaModule'
 
 export * from './type'
 
@@ -31,6 +31,7 @@ export * from './type'
 
 /**
  * Name mapping of all modules in root store
+ * TODO: A collection of operations, meta data of modules?
  */
 export const moduleNames = {
   area: areaModule.name
@@ -44,7 +45,29 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
 
   // example: unknown
-  [areaSymbol]: AreaStateInterface
+
+  // FIXME: Don't find a transpile success solution so far.
+  // 1. Define `[key:string]: any`, then use computed string as property.
+  // Get error: TS1169: A computed property name in an interface must refer to an expression whose type is a literal type or a 'unique symbol' type
+  // 2. Use computed symbol as property. Call `state[moduleNames.area]` in vue page.
+  // Get error in browser: [webpack-dev-server] TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'StateInterface'.
+  // 3. Define `[key:string]: any`. Use computed symbol as property. Call `state[moduleNames.area]` in vue page.
+  // Works well, but seems tricky?
+
+  // TODO: We know that to get module state from global store the code is `this.$store.state.moduleA`
+  // `moduleA` is defined by
+  // ```
+  //   const Store = createStore<StateInterface>({
+  //     modules: {
+  //       moduleA: moduleA
+  //     },
+  //   })
+  // ```
+  // ?? What the meanning of keys in this interface? By testing, those properties don't have to match properties in createStore()#modules.
+
+  [key: string]: any
+
+  readonly [areaSymbol]: AreaStateInterface
 }
 
 // provide typings for `this.$store`
@@ -68,37 +91,19 @@ export default store(function (/* { ssrContext } */) {
     strict: !!process.env.DEBUGGING
   })
 
-  console.log('DEBUG >> store index createStore >> ', Store)
-
   return Store
 })
 
-// Todo: Can not get store reference in computed methods of a Vue page/component. Look into AreasPage.vue.
 export function useStore () {
-  console.log('storeKey:', storeKey)
   return vuexUseStore(storeKey)
 }
 
 /**
- * Export all mutations types in all modules
- * Todo: Do we need to export all mutations to app? Maybe only export global mutations. Others mutations should be local, being called by global actions.
+ * Assemble global type.
+ * TODO: Type guard?
+ * @param localType
+ * @param moduleNames
  */
-export const mutationTypes : {[key: string]: OperationTypes} = {
-  [areaModule.name]: areaMutationGlobalTypes
-}
-
-/**
- * Export all getter types in all modules
- * todo: Do we need to export all getter to app?
- */
-export const getterTypes: {[key: string]: OperationTypes} = {
-  [areaModule.name]: areaGetterGlobalTypes
-}
-
-/**
- * Export all getter types in all modules
- * todo: Do we need to export all getter to app? Maybe.
- */
-export const actionTypes: {[key: string]: OperationTypes} = {
-  [areaModule.name]: areaActionGlobalTypes
+export function getGlobalType (localType: string, moduleNames: string): string {
+  return `${moduleNames}/${localType}`
 }

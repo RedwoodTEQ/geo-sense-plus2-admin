@@ -13,6 +13,8 @@ export interface OperationTypes {[key: string]: string}
  */
 export type MutationLocalTypes<IMutations> = { [P in (keyof IMutations)]: P }
 
+export type MutationGlobalTypes<IMutations> = { [P in (keyof IMutations)]: string }
+
 /**
  * Mutation Implementation.
  * Keys have to match keys of interface `IMutations`. Otherwise get transpile error.
@@ -27,6 +29,8 @@ export type MutationImplementations<IMutations, State> = { [P in (keyof IMutatio
  * @typeParam IActions - Interface of actions implementation.
  */
 export type ActionLocalTypes<IActions> = { [P in (keyof IActions)]: P }
+
+export type ActionGlobalTypes<IActions> = { [P in (keyof IActions)]: string }
 
 /**
  * Action Implementation.
@@ -43,6 +47,8 @@ export type ActionImplementations<IActions, State> = { [P in (keyof IActions)]: 
  */
 export type GetterLocalTypes<IGetter> = { [P in (keyof IGetter)]: P }
 
+export type GetterGlobalTypes<IGetter> = { [P in (keyof IGetter)]: string }
+
 /**
  * Action Implementation.
  * Keys have to match keys of interface `IMutations`. Otherwise get transpile error.
@@ -53,6 +59,10 @@ export type GetterImplementations<IGetter, State> = { [P in (keyof IGetter)]: Ge
 
 /**
  * Augmented module type. All modules should be defined by this type.
+ * @property name - Module name. It should be unique
+ *                  Vuex registers modules by their name
+ *                  Module name is also used as the namespace of global type.
+ *                  TODO: How to avoid duplicate naming?
  * @typeParam ModuleState - Type of module state, which implements module state interface.
  * @see {@link AreaStateInterface}
  */
