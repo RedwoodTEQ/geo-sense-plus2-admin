@@ -13,21 +13,22 @@
     "build:pwa": "quasar build -m pwa"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^1.10.8",
     "@types/echarts": "^4.9.7",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "echarts": "^5.1.0",
     "firebase": "^8.6.8",
     "leaflet": "^1.7.1",
-    "quasar": "^2.0.0-beta.1",
+    "quasar": "^2.0.2",
     "typescript-logging": "^1.0.0",
     "vue-class-component": "^8.0.0-rc.1",
     "vue-echarts": "^6.0.0-rc.4",
-    "vue-i18n": "^9.0.0-beta.0"
+    "vue-i18n": "^9.0.0-beta.0",
+    "vuex": "4.0.2"
   },
   "devDependencies": {
-    "@quasar/app": "^3.0.0-beta.1",
+    "@quasar/app": "^3.0.2",
     "@types/leaflet": "^1.7.0",
     "@types/node": "^10.17.15",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
