@@ -3,7 +3,8 @@ import { StateInterface } from '../index'
 import { State, AreaData } from './state'
 import {
   ActionLocalTypes,
-  ActionImplementations
+  ActionImplementations,
+  OperationReturn
 } from '../type'
 import { localTypes as mutationLocalTypes, IMutations } from './mutations'
 
@@ -23,7 +24,7 @@ type AugmentedActionContext = {
  * Todo: Implementation of promising return data type.
  */
 export interface IActions {
-  ADD_AREA ({ commit }: AugmentedActionContext, payload: AreaData): Promise<boolean>
+  ADD_AREA ({ commit }: AugmentedActionContext, payload: AreaData): Promise<OperationReturn>
 }
 
 /**
@@ -38,14 +39,24 @@ export const localTypes: ActionLocalTypes<IActions> = {
  * Implementation of actions.
  * All actions inside {@link IActions} have to be implemented.
  * There could be actions which are not listed in {@link IActions}.
+ * Todo: A promise for RESTFull API
+ * Todo: How to do type guard for the return promising?
  */
 const actions: ActionImplementations<IActions, State> = {
-  ADD_AREA ({ commit }: AugmentedActionContext, rowData: AreaData) {
+  ADD_AREA ({ commit, state }: AugmentedActionContext, rowData: AreaData) {
     return new Promise((resolve) => {
-      commit(mutationLocalTypes.ADD_AREA, rowData)
-      resolve(true)
+      if (isExist(state, rowData.edgeID)) {
+        resolve({ result: false, message: 'Row is exist.' })
+      } else {
+        commit(mutationLocalTypes.ADD_AREA, rowData)
+        resolve({ result: true })
+      }
     })
   }
+}
+
+function isExist (state: State, id: string): boolean {
+  return !!(state.rows.find(row => { return row.edgeID === id }))
 }
 
 export default actions

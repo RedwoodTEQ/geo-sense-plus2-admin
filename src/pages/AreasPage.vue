@@ -139,6 +139,9 @@ export default class AreasPage extends Vue {
       assetsCount: data.AssetRefs.length,
       lastUpdated: data.LastUpdate.toDate().toTimeString()
     })
+      .then(result => {
+        console.log(result)
+      })
       .catch(e => {
         pageLog.error('Add new area failed.', e)
       })

@@ -58,6 +58,15 @@ export type GetterGlobalTypes<IGetter> = { [P in (keyof IGetter)]: string }
 export type GetterImplementations<IGetter, State> = { [P in (keyof IGetter)]: Getter<State, StateInterface> }
 
 /**
+ * Result of operations
+ * Todo: A interface of operation return.
+ */
+export type OperationReturn = {
+  result: boolean,
+  message?: string
+}
+
+/**
  * Augmented module type. All modules should be defined by this type.
  * @property name - Module name. It should be unique
  *                  Vuex registers modules by their name

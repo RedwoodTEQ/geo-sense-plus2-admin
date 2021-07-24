@@ -22,8 +22,14 @@ export const localTypes: MutationLocalTypes<IMutations> = {
  */
 const mutations: MutationImplementations<IMutations, State> = {
   ADD_AREA (state: State, rowData: AreaData) {
-    state.rows.push(rowData)
+    if (!isExist(state, rowData.edgeID)) {
+      state.rows.push(rowData)
+    }
   }
+}
+
+function isExist (state: State, id: string): boolean {
+  return !!(state.rows.find(row => { return row.edgeID === id }))
 }
 
 export default mutations
