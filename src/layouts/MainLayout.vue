@@ -16,7 +16,8 @@
           Geo Sense Plus2 Admin Sandbox
         </q-toolbar-title>
         <q-btn flat round @click="$q.dark.toggle()" :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"/>
-        <div>v{{ 0.01 }}</div>
+        <!-- Todo: Get it from a env var-->
+        <div>v0.10</div>
       </q-toolbar>
     </q-header>
 
