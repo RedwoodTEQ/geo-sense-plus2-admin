@@ -3,7 +3,7 @@ import { QTable } from 'quasar/dist/types'
 export interface AreaData {
   edgeID: string;
   name: string;
-  floorID: string;
+  floor: string;
   assetsCount: number;
   lastUpdated: string;
 }
@@ -16,11 +16,13 @@ type QColumnType = (typeof QTable.columns)[number]
 /**
  * Augmented column type
  */
-export type Column = {
-  name: keyof AreaData,
-  align?: 'left' | 'right' | 'center'
-  field: keyof AreaData,
-} & Omit<QColumnType, 'name' | 'align'>
+// export type Column = {
+//   name: keyof AreaData,
+//   align?: 'left' | 'right' | 'center'
+//   field: keyof AreaData,
+// } & Omit<QColumnType, 'name' | 'align'>
+
+export type Column = QColumnType
 
 export interface AreaStateInterface {
   columns: Column[];
@@ -32,6 +34,7 @@ function state (): AreaStateInterface {
     // Todo: Customized columns
     columns: [
       // Header column
+      // Todo: type gard
       {
         name: 'edgeID',
         required: true,
@@ -44,10 +47,11 @@ function state (): AreaStateInterface {
         headerClasses: 'bg-primary text-white'
       },
       // Other columns
-      { name: 'name', align: 'center', label: 'Name', field: 'name', sortable: true },
-      { name: 'floorID', align: 'center', label: 'Floor ID', field: 'floorID', sortable: true },
+      { name: 'name', align: 'left', label: 'Name', field: 'name', sortable: true },
+      { name: 'floor', align: 'left', label: 'Floor', field: 'floor', sortable: true },
       { name: 'assetsCount', align: 'center', label: 'Assets Count', field: 'assetsCount', sortable: true },
-      { name: 'lastUpdated', align: 'center', label: 'Last Update', field: 'lastUpdated', sortable: true }
+      { name: 'lastUpdated', align: 'left', label: 'Last Update', field: 'lastUpdated', sortable: true },
+      { name: 'buttons', align: 'left', label: '', field: '', sortable: false }
     ],
 
     rows: []
