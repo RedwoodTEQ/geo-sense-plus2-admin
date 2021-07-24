@@ -68,19 +68,6 @@ interface IAreaDataFirebase {
     '$q.dark.isActive' (value) {
       console.log(`[note] EChartVuePage >> Watch dark status: ${value ? 'dark' : 'light'} `)
     }
-  },
-  computed: {
-    // columns (): any {
-    //   const $store = useStore()
-    //   const areaState = $store.state[moduleNames.area] as AreaStateInterface
-    //   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    //   return areaState.columns
-    // },
-    rows (): AreaData[] {
-      const $store = useStore()
-      const areaState = $store.state[moduleNames.area] as AreaStateInterface
-      return areaState.rows
-    }
   }
 })
 
@@ -101,13 +88,19 @@ export default class AreasPage extends Vue {
    * Con: Unknown issue?
    * ref:https://github.com/vuejs/vue-class-component/issues/416
    */
-  columns = setup(() => {
+  get columns () {
     // FIXME: Can ont use `this.$store`
     const store = useStore()
     const areaState = store.state[moduleNames.area] as AreaStateInterface
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return areaState.columns
-  })
+  }
+
+  get rows (): AreaData[] {
+    const $store = useStore()
+    const areaState = $store.state[moduleNames.area] as AreaStateInterface
+    return areaState.rows
+  }
 
   get store () {
     return this.$store
