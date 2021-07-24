@@ -26,8 +26,20 @@ import {
   AreaData, AreaStateInterface,
   moduleNames,
   areaGetterLocalTypes, areaActionLocalTypes,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  GetterLocalTypes, ActionLocalTypes,
   getGlobalType, useStore
 } from '../store'
+
+import firebase from 'firebase/app'
+
+interface IAreaDataFirebase {
+  AssetRefs: firebase.firestore.DocumentReference[],
+  EdgeMarkerRef: firebase.firestore.DocumentReference,
+  LastUpdate: firebase.firestore.Timestamp,
+  Name: string,
+  Remarks: string
+}
 
 @Options({
   name: 'AreasPage',
@@ -90,9 +102,9 @@ export default class AreasPage extends Vue {
       category: DatabaseCategory.Firebase,
       path: 'edges',
       callbacks: {
-        onAdded: (id, data) => {
+        onAdded: (id, data: IAreaDataFirebase) => {
           pageLog.info({ msg: 'Added', data: id })
-          console.log(data)
+          this.addArea(id, data)
         },
         onModified: (id, data) => {
           pageLog.info({ msg: 'Modified', data: id })
@@ -111,17 +123,21 @@ export default class AreasPage extends Vue {
     pageLog.info('AreasPage init.')
   }
 
-  addArea () {
+  addArea (id: string, data: IAreaDataFirebase) {
     console.log('addArea >> moduleName: ', this.moduleName)
 
+    console.log(data)
+
     const type = getGlobalType(areaActionLocalTypes.ADD_AREA, moduleNames.area)
+
+    // Todo: Type guard of payload of dispatch.
+    // Using module IActions's playload type as generic type.
     this.$store.dispatch(type, {
-      id: 0,
-      name: `added ${Math.random()}`,
-      edgeID: '0092769BB9EA2F03',
-      floorID: '3cRUIEprlnW8bciES7vO',
-      assetsCount: 7,
-      lastUpdated: new Date('Jun 3 2021').toDateString()
+      edgeID: id,
+      name: data.Name,
+      floorID: data.EdgeMarkerRef.path,
+      assetsCount: data.AssetRefs.length,
+      lastUpdated: data.LastUpdate.toDate().toTimeString()
     })
       .catch(e => {
         pageLog.error('Add new area failed.', e)

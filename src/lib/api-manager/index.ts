@@ -25,6 +25,8 @@ export interface RESTFullOptions {
 /**
  * Fetch options for firebase.
  * @property category - Has to be `DatabaseCategory.Firebase`
+ * @property path - Path of collection in firestore
+ * @property callbacks - Call backs of changes
  */
 export interface FirebaseOptions {
   category: DatabaseCategory.Firebase

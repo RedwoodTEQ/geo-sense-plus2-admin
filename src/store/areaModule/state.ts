@@ -1,73 +1,56 @@
+import { QTable } from 'quasar/dist/types'
+
 export interface AreaData {
-  id: number;
-  name: string;
   edgeID: string;
+  name: string;
   floorID: string;
   assetsCount: number;
   lastUpdated: string;
 }
 
+/**
+ * Original column type of quasar table
+ */
+type QColumnType = (typeof QTable.columns)[number]
+
+/**
+ * Augmented column type
+ */
+export type Column = {
+  name: keyof AreaData,
+  align?: 'left' | 'right' | 'center'
+  field: keyof AreaData,
+} & Omit<QColumnType, 'name' | 'align'>
+
 export interface AreaStateInterface {
-  columns: any;
+  columns: Column[];
   rows: AreaData[];
 }
 
 function state (): AreaStateInterface {
   return {
+    // Todo: Customized columns
     columns: [
+      // Header column
       {
-        name: 'id',
+        name: 'edgeID',
         required: true,
         label: 'Areas(ID)',
         align: 'left',
-        field: (row: AreaData) => row.id,
-        format: (val: string) => `${val}`,
+        field: 'edgeID',
         sortable: true,
         classes: 'bg-grey-2 ellipsis',
-        style: 'max-width: 100px',
+        style: 'max-width: 200px',
         headerClasses: 'bg-primary text-white'
       },
+      // Other columns
       { name: 'name', align: 'center', label: 'Name', field: 'name', sortable: true },
-      { name: 'edgeID', align: 'center', label: 'Edge ID', field: 'edgeID', sortable: true },
-      { name: 'floorID', label: 'Floor ID', field: 'floorID', sortable: true },
-      { name: 'assetsCount', label: 'Assets Count', field: 'assetsCount', sortable: true },
-      { name: 'lastUpdated', label: 'Last Update', field: 'lastUpdated', sortable: true }
+      { name: 'floorID', align: 'center', label: 'Floor ID', field: 'floorID', sortable: true },
+      { name: 'assetsCount', align: 'center', label: 'Assets Count', field: 'assetsCount', sortable: true },
+      { name: 'lastUpdated', align: 'center', label: 'Last Update', field: 'lastUpdated', sortable: true }
     ],
 
-    rows: [
-      {
-        id: 0,
-        name: 'area 12',
-        edgeID: '0092769BB9EA2F03',
-        floorID: '3cRUIEprlnW8bciES7vO',
-        assetsCount: 7,
-        lastUpdated: new Date('Jun 3 2021').toDateString()
-      },
-      {
-        id: 1,
-        name: 'area 31',
-        edgeID: '0092969BB9EA2F03',
-        floorID: '3cR0IEprlnW8bciES7vO',
-        assetsCount: 3,
-        lastUpdated: new Date('Jun 13 2021').toDateString()
-      },
-      {
-        id: 2,
-        name: 'area 34',
-        edgeID: '0092769BB9EA2F03',
-        floorID: '3cRoIEprlnW8bciES7vO',
-        assetsCount: 3,
-        lastUpdated: new Date().toDateString()
-      },
-      {
-        id: 3,
-        name: 'area 64',
-        edgeID: '0090789BB9EA2F03',
-        floorID: '3cRooEirlnW8bciES7vO',
-        assetsCount: 2,
-        lastUpdated: new Date('Jun 23 2021').toDateString()
-      }
-    ]
+    rows: []
   }
 }
 
