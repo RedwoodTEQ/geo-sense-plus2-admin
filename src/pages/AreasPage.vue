@@ -31,14 +31,22 @@
         </template>
       </q-table>
     </div>
+    <q-dialog
+        v-model="showEdit"
+        @hide="toggleEdit(false)"
+        no-scroll no-scrollbar
+    >
+      <AreaCard />
+    </q-dialog>
   </q-page>
 </template>
 
 <script lang="ts">
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ref } from 'vue'
+import { ref, Ref } from 'vue'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Vue, Options, setup } from 'vue-class-component'
-import { pageLog } from '../utility/logger'
+import { pageLog } from 'src/utility/logger'
 import APIManager, {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   FirebaseOptions, RESTFullOptions,
@@ -54,6 +62,8 @@ import {
 
 import firebase from 'firebase/app'
 
+import AreaCard from 'components/areas/AreaCardComponent.vue'
+
 interface IAreaDataFirebase {
   AssetRefs: firebase.firestore.DocumentReference[],
   EdgeMarkerRef: firebase.firestore.DocumentReference,
@@ -68,18 +78,27 @@ interface IAreaDataFirebase {
     '$q.dark.isActive' (value) {
       console.log(`[note] EChartVuePage >> Watch dark status: ${value ? 'dark' : 'light'} `)
     }
-  }
+  },
+  components: { AreaCard }
 })
 
 export default class AreasPage extends Vue {
   apiManager = new APIManager()
   moduleName = moduleNames.area
 
-  _loading = false
-  _filter = ''
+  /** Use Setup() to wrap ref(): https://github.com/vuejs/vue-class-component/issues/530 */
+  selected = setup<Ref<AreaData[]>>(() => ref([]))
+  filter = setup<Ref<string>>(() => ref(''))
+  loading = setup<Ref<boolean>>(() => ref(false))
+  showEdit = setup<Ref<boolean>>(() => ref(false))
 
-  // selected = ref([])
-  _selected: AreaData[] = []
+  // editName = setup<Ref<string>>(() => ref(''))
+  // editRemark = setup<Ref<string>>(() => ref(''))
+  // editLocation = setup<Ref<string>>(() => ref(''))
+  // editFloor = setup<Ref<string>>(() => ref(''))
+  // editMarker = setup<Ref<string>>(() => ref(''))
+
+  // $q = useQuasar()
 
   /**
    * Columns data from DB
@@ -104,16 +123,6 @@ export default class AreasPage extends Vue {
 
   get store () {
     return this.$store
-  }
-
-  get loading () { return this._loading }
-
-  get filter () { return this._filter }
-  set filter (keywords: string) { this._filter = keywords }
-
-  get selected (): AreaData[] { return this._selected }
-  set selected (selected: AreaData[]) {
-    this._selected = selected
   }
 
   get rowsCount (): number {
@@ -163,8 +172,6 @@ export default class AreasPage extends Vue {
   addArea (id: string, data: IAreaDataFirebase) {
     console.log('addArea >> moduleName: ', this.moduleName)
 
-    console.log(data)
-
     const type = getGlobalType(areaActionLocalTypes.ADD_AREA, moduleNames.area)
 
     function formatData (dateIn: Date) {
@@ -195,7 +202,13 @@ export default class AreasPage extends Vue {
   }
 
   addRow () {
+    this.toggleEdit(true)
     console.log('TODO add row')
+  }
+
+  toggleEdit (toggle: boolean) {
+    this.showEdit = toggle
+    this.loading = toggle
   }
 
   removeRow () {
