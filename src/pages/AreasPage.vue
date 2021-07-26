@@ -187,7 +187,7 @@ export default class AreasPage extends Vue {
       name: data.Name,
       floor: data.EdgeMarkerRef?.path || '',
       assetsCount: data.AssetRefs?.length || 0,
-      lastUpdated: data.LastUpdate ? formatData(data.LastUpdate.toDate()) : '-'   // Should not be optional property.
+      lastUpdated: data.LastUpdate ? formatData(data.LastUpdate.toDate()) : '-' // Should not be optional property.
     })
       .then(result => {
         console.log(result)
