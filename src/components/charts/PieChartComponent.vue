@@ -20,7 +20,7 @@ import { ECharts } from 'boot/echarts'
 
 class Props {
   cardHeight = prop<number>({ default: 250 })
-  theme!: string | undefined;
+  theme!: string | undefined
   options = prop<ECharts.EChartsOption>({
     default: {
       tooltip: {
@@ -39,48 +39,48 @@ class Props {
           saveAsImage: {}
         }
       },
-      series: [
-        {
-          name: 'Access source',
-          type: 'pie',
-          roseType: undefined,
-          radius: [0, '70%'],
-          center: ['50%', '40%'],
-          avoidLabelOverlap: false,
-          itemStyle: {
-            borderRadius: 10,
-            borderColor: '#fff',
-            borderWidth: 2
-          },
+      series: [{
+        name: 'Access source',
+        type: 'pie',
+        roseType: undefined,
+        radius: [0, '70%'],
+        center: ['50%', '40%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#fff',
+          borderWidth: 2
+        },
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
           label: {
-            show: false,
-            position: 'center'
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: '40',
-              fontWeight: 'bold'
-            }
-          },
-          labelLine: {
-            show: false
-          },
-          data: [
-            { value: 0, name: 'No data' }
+            show: true,
+            fontSize: '40',
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: [{
+          value: 0,
+          name: 'No data'
+        }
           // { value: 1048, name: 'Search Engine' },
           // { value: 735, name: 'Direct access' },
           // { value: 580, name: 'Email marketing' },
           // { value: 484, name: 'Affiliate Advertising' },
           // { value: 300, name: 'Video ad' }
-          ]
-        }
-      ]
+        ]
+      }]
     }
-  });
+  })
 
-  readonly meta!: Meta;
-  readonly active!: boolean;
+  readonly meta!: Meta
+  readonly active!: boolean
 }
 
 @Options({

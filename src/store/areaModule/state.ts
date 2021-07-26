@@ -32,8 +32,7 @@ export interface AreaStateInterface {
 function state (): AreaStateInterface {
   return {
     // Todo: Customized columns
-    columns: [
-      // Header column
+    columns: [// Header column
       // Todo: type gard
       {
         name: 'edgeID',
@@ -45,14 +44,38 @@ function state (): AreaStateInterface {
         classes: 'bg-grey-2 ellipsis',
         style: 'max-width: 200px',
         headerClasses: 'bg-primary text-white'
-      },
-      // Other columns
-      { name: 'name', align: 'left', label: 'Name', field: 'name', sortable: true },
-      { name: 'floor', align: 'left', label: 'Floor', field: 'floor', sortable: true },
-      { name: 'assetsCount', align: 'center', label: 'Assets Count', field: 'assetsCount', sortable: true },
-      { name: 'lastUpdated', align: 'left', label: 'Last Update', field: 'lastUpdated', sortable: true },
-      { name: 'buttons', align: 'left', label: '', field: '', sortable: false }
-    ],
+      }, // Other columns
+      {
+        name: 'name',
+        align: 'left',
+        label: 'Name',
+        field: 'name',
+        sortable: true
+      }, {
+        name: 'floor',
+        align: 'left',
+        label: 'Floor',
+        field: 'floor',
+        sortable: true
+      }, {
+        name: 'assetsCount',
+        align: 'center',
+        label: 'Assets Count',
+        field: 'assetsCount',
+        sortable: true
+      }, {
+        name: 'lastUpdated',
+        align: 'left',
+        label: 'Last Update',
+        field: 'lastUpdated',
+        sortable: true
+      }, {
+        name: 'buttons',
+        align: 'left',
+        label: '',
+        field: '',
+        sortable: false
+      }],
 
     rows: []
   }

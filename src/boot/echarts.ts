@@ -17,24 +17,22 @@ import {
   PieChart
 } from 'echarts/charts'
 import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent
+  TitleComponent, TooltipComponent, LegendComponent
 } from 'echarts/components'
 
-use([
-  CanvasRenderer,
-  PieChart,
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent
-])
+use([CanvasRenderer, PieChart, TitleComponent, TooltipComponent, LegendComponent])
 
 export default boot(({ app }) => {
   // Set `v-chart` component to be Echarts on app
   quasarLog.info('Echarts boot')
-  quasarLog.debug({ msg: 'VUEECharts: ', data: VUEECharts })
-  quasarLog.debug({ msg: 'ECharts: ', data: ECharts })
+  quasarLog.debug({
+    msg: 'VUEECharts: ',
+    data: VUEECharts
+  })
+  quasarLog.debug({
+    msg: 'ECharts: ',
+    data: ECharts
+  })
 
   app.component('v-chart', VUEECharts)
 })

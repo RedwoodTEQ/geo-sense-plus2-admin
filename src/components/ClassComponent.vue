@@ -21,10 +21,10 @@ import { Todo, Meta } from './models'
  * https://github.com/vuejs/vue-class-component/issues/465
  */
 class Props {
-  readonly title!: string;
-  readonly todos = prop<Todo[]>({ default: () => [] });
-  readonly meta!: Meta;
-  readonly active!: boolean;
+  readonly title!: string
+  readonly todos = prop<Todo[]>({ default: () => [] })
+  readonly meta!: Meta
+  readonly active!: boolean
 }
 
 @Options({
@@ -32,7 +32,7 @@ class Props {
 })
 
 export default class ClassComponent extends Vue.with(Props) {
-  clickCount = 0;
+  clickCount = 0
 
   increment () {
     this.clickCount += 1

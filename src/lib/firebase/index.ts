@@ -53,15 +53,15 @@ export const loadCollectionSnapshot = (path: string, callbacks: ICollectionCallb
         switch (type) {
           case 'added':
             !!callbacks?.onAdded && callbacks.onAdded(deviceId, data)
-            break;
+            break
           case 'removed':
             !!callbacks?.onRemoved && callbacks.onRemoved(deviceId, data)
-            break;
+            break
           case 'modified':
             !!callbacks?.onModified && callbacks.onModified(deviceId, data)
-            break;
+            break
           default:
-            break;
+            break
         }
 
         // const floorplanId = data.EdgeMarkerRef

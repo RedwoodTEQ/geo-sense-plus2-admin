@@ -37,9 +37,9 @@
         </q-item-label>
 
         <LeftDrawerItem
-            v-for="item in leftDrawerList"
-            :key="item.title"
-            v-bind="item"
+          v-for="item in leftDrawerList"
+          :key="item.title"
+          v-bind="item"
         />
 
         <!-- Group external links -->
@@ -52,9 +52,9 @@
           <!-- Indentation list by `class="q-pl-lg"` -->
           <q-list class="q-pl-lg">
             <EssentialLink
-                v-for="link in essentialLinks"
-                :key="link.title"
-                v-bind="link"
+              v-for="link in essentialLinks"
+              :key="link.title"
+              v-bind="link"
             />
           </q-list>
         </q-expansion-item>
@@ -62,7 +62,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
   </q-layout>
 </template>
@@ -72,103 +72,89 @@ import EssentialLink from 'components/EssentialLink.vue'
 import LeftDrawerItem from 'components/LeftDrawerItem.vue'
 
 // External links
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'Quasar v2.0.0-beta',
-    icon: 'school',
-    link: 'https://next.quasar.dev/'
-  },
-  {
-    title: 'Icon set',
-    caption: 'Material icon list',
-    icon: 'art_track',
-    link: 'https://fonts.google.com/icons?selected=Material+Icons&icon.query=public'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
+const linksList = [{
+  title: 'Docs',
+  caption: 'Quasar v2.0.0-beta',
+  icon: 'school',
+  link: 'https://next.quasar.dev/'
+}, {
+  title: 'Icon set',
+  caption: 'Material icon list',
+  icon: 'art_track',
+  link: 'https://fonts.google.com/icons?selected=Material+Icons&icon.query=public'
+}, {
+  title: 'Github',
+  caption: 'github.com/quasarframework',
+  icon: 'code',
+  link: 'https://github.com/quasarframework'
+}, {
+  title: 'Discord Chat Channel',
+  caption: 'chat.quasar.dev',
+  icon: 'chat',
+  link: 'https://chat.quasar.dev'
+}, {
+  title: 'Forum',
+  caption: 'forum.quasar.dev',
+  icon: 'record_voice_over',
+  link: 'https://forum.quasar.dev'
+}, {
+  title: 'Twitter',
+  caption: '@quasarframework',
+  icon: 'rss_feed',
+  link: 'https://twitter.quasar.dev'
+}, {
+  title: 'Facebook',
+  caption: '@QuasarFramework',
+  icon: 'public',
+  link: 'https://facebook.quasar.dev'
+}, {
+  title: 'Quasar Awesome',
+  caption: 'Community Quasar projects',
+  icon: 'favorite',
+  link: 'https://awesome.quasar.dev'
+}]
 
 // Internal components
-const leftDrawerItems = [
-  {
-    title: 'Home',
-    caption: 'Home page',
-    icon: 'home',
-    to: '/'
-  },
-  {
-    title: 'Map',
-    caption: 'Map placeholder',
-    icon: 'place',
-    to: '/map'
-  },
-  {
-    // Expansion item
-    title: 'Chart',
-    icon: 'insights',
-    caption: 'Charts components',
-    items: [
-      // Child item
-      {
-        caption: 'ECharts Vue',
-        icon: 'leaderboard',
-        to: '/chart/echarts-vue'
-      },
-      // Child item
-      {
-        caption: 'ECharts components',
-        icon: 'pie_chart',
-        to: '/chart/echarts'
-      }
-    ]
-  },
-  {
-    title: 'Areas List',
-    caption: 'Areas',
-    icon: 'place',
-    to: '/areas'
-  }
-]
+const leftDrawerItems = [{
+  title: 'Home',
+  caption: 'Home page',
+  icon: 'home',
+  to: '/'
+}, {
+  title: 'Map',
+  caption: 'Map placeholder',
+  icon: 'place',
+  to: '/map'
+}, {
+  // Expansion item
+  title: 'Chart',
+  icon: 'insights',
+  caption: 'Charts components',
+  items: [// Child item
+    {
+      caption: 'ECharts Vue',
+      icon: 'leaderboard',
+      to: '/chart/echarts-vue'
+    }, // Child item
+    {
+      caption: 'ECharts components',
+      icon: 'pie_chart',
+      to: '/chart/echarts'
+    }]
+}, {
+  title: 'Areas List',
+  caption: 'Areas',
+  icon: 'place',
+  to: '/areas'
+}]
 
 import { Vue, Options } from 'vue-class-component'
 
 @Options({
-  components: { EssentialLink, LeftDrawerItem },
+  components: {
+    EssentialLink,
+    LeftDrawerItem
+  },
   watch: {
     '$q.dark.isActive' (value) {
       console.log(`[note] MainLayout >> Watch dark status: ${value ? 'dark' : 'light'}`)
@@ -176,9 +162,10 @@ import { Vue, Options } from 'vue-class-component'
   }
 })
 export default class MainLayout extends Vue {
-  leftDrawerOpen = false;
-  essentialLinks = linksList;
-  leftDrawerList = leftDrawerItems;
+  leftDrawerOpen = false
+  essentialLinks = linksList
+  leftDrawerList = leftDrawerItems
+
   toggleLeftDrawer () {
     this.leftDrawerOpen = !this.leftDrawerOpen
   }

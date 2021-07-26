@@ -29,7 +29,9 @@ const mutations: MutationImplementations<IMutations, State> = {
 }
 
 function isExist (state: State, id: string): boolean {
-  return !!(state.rows.find(row => { return row.edgeID === id }))
+  return !!(state.rows.find(row => {
+    return row.edgeID === id
+  }))
 }
 
 export default mutations

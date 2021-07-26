@@ -2,19 +2,19 @@
   <q-page padding>
     <div class="q-pa-md">
       <q-table
-          :columns="columns"
-          :rows="rows"
-          :loading="loading"
-          :filter="filter"
-          row-key="name"
-          :selected-rows-label="getSelectedString"
-          selection="multiple"
-          v-model:selected="selected"
+        :columns="columns"
+        :rows="rows"
+        :loading="loading"
+        :filter="filter"
+        row-key="name"
+        :selected-rows-label="getSelectedString"
+        selection="multiple"
+        v-model:selected="selected"
       >
         <template v-slot:body-cell-buttons="props">
           <q-td :props="props">
             <div>
-              <q-btn color="primary" label="Info/Edit" size="ms" />
+              <q-btn color="primary" label="Info/Edit" size="ms"/>
             </div>
           </q-td>
         </template>
@@ -22,19 +22,19 @@
         <template v-slot:top>
           <q-input dense debounce="300" color="primary" v-model="filter">
             <template v-slot:before>
-              <q-icon name="search" />
+              <q-icon name="search"/>
             </template>
           </q-input>
-          <q-space />
-          <q-btn color="primary" size="ms" :disable="loading" label="Add Area" @click="toggleEdit(true)" />
-          <q-btn class="q-ml-sm" color="red" size="ms" :disable="loading" label="Remove Area" @click="removeArea" />
+          <q-space/>
+          <q-btn color="primary" size="ms" :disable="loading" label="Add Area" @click="toggleEdit(true)"/>
+          <q-btn class="q-ml-sm" color="red" size="ms" :disable="loading" label="Remove Area" @click="removeArea"/>
         </template>
       </q-table>
     </div>
     <q-dialog
-        v-model="showEdit"
-        @hide="toggleEdit(false)"
-        no-scroll no-scrollbar
+      v-model="showEdit"
+      @hide="toggleEdit(false)"
+      no-scroll no-scrollbar
     >
       <AreaCard
         @submit-area="submitArea"
@@ -141,15 +141,24 @@ export default class AreasPage extends Vue {
       path: 'edges',
       callbacks: {
         onAdded: (id, data: IAreaDataFirebase) => {
-          pageLog.info({ msg: 'Added', data: id })
+          pageLog.info({
+            msg: 'Added',
+            data: id
+          })
           this.addToStore(id, data)
         },
         onModified: (id, data) => {
-          pageLog.info({ msg: 'Modified', data: id })
+          pageLog.info({
+            msg: 'Modified',
+            data: id
+          })
           console.log(data)
         },
         onRemoved: (id, data) => {
-          pageLog.info({ msg: 'Removed', data: id })
+          pageLog.info({
+            msg: 'Removed',
+            data: id
+          })
           console.log(data)
         }
       }

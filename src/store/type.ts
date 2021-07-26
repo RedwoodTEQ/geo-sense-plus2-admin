@@ -4,7 +4,9 @@ import { StateInterface } from './index'
 /**
  * Type collection of action, mutation, getter and others.
  */
-export interface OperationTypes {[key: string]: string}
+export interface OperationTypes {
+  [key: string]: string
+}
 
 /**
  * Mutation local types.
@@ -62,8 +64,7 @@ export type GetterImplementations<IGetter, State> = { [P in (keyof IGetter)]: Ge
  * Todo: A interface of operation return.
  */
 export type OperationReturn = {
-  result: boolean,
-  message?: string
+  result: boolean, message?: string
 }
 
 /**

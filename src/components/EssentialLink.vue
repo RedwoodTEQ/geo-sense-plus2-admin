@@ -10,7 +10,7 @@
       v-if="icon"
       avatar
     >
-      <q-icon :name="icon" />
+      <q-icon :name="icon"/>
     </q-item-section>
 
     <q-item-section>
@@ -26,12 +26,13 @@
 import { Vue, prop, Options } from 'vue-class-component'
 
 class Props {
-  readonly title!: string;
-  readonly caption = prop({ default: '' });
-  readonly link = prop({ default: '#' });
-  readonly icon = prop({ default: '' });
+  readonly title!: string
+  readonly caption = prop({ default: '' })
+  readonly link = prop({ default: '#' })
+  readonly icon = prop({ default: '' })
 }
 
 @Options({})
-export default class EssentialLink extends Vue.with(Props) {}
+export default class EssentialLink extends Vue.with(Props) {
+}
 </script>

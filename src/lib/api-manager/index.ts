@@ -1,7 +1,5 @@
 import {
-  loadCollectionSnapshot,
-  addDocToCollectionSnapshot,
-  ICollectionCallbacks as IFirebaseCollectionCallbacks
+  loadCollectionSnapshot, addDocToCollectionSnapshot, ICollectionCallbacks as IFirebaseCollectionCallbacks
 } from '../firebase'
 
 export enum DatabaseCategory {
@@ -46,9 +44,7 @@ class APIManager {
    * @typeParam DB - enum `DatabaseCategory`. It visually implies type of option.
    * @param options - It has to match the type of generic type `DB`.
    */
-  fetch<DB> (
-    options: DB extends DatabaseCategory.Firebase ? FirebaseOptions: RESTFullOptions
-  ) {
+  fetch<DB> (options: DB extends DatabaseCategory.Firebase ? FirebaseOptions : RESTFullOptions) {
     this._fetch(options)
   }
 
@@ -71,17 +67,15 @@ class APIManager {
   }
 
   // eslint-disable-next-line
-  private _getAPI(api: string, callbacks: IRESTFullCallbacks) {}
+  private _getAPI (api: string, callbacks: IRESTFullCallbacks) {
+  }
 
   /**
    * Post data by given collection path or RESTFull api.
    * @typeParam DB - enum `DatabaseCategory`. It visually implies type of option.
    * @param options - It has to match the type of generic type `DB`.
    */
-  post<DB> (
-    options: DB extends DatabaseCategory.Firebase ? FirebaseOptions: RESTFullOptions,
-    data: any
-  ) {
+  post<DB> (options: DB extends DatabaseCategory.Firebase ? FirebaseOptions : RESTFullOptions, data: any) {
     this._post(options, data)
   }
 
