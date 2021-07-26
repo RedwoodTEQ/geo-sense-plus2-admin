@@ -2,9 +2,7 @@ import { ActionContext } from 'vuex'
 import { StateInterface } from '../index'
 import { State, AreaData } from './state'
 import {
-  ActionLocalTypes,
-  ActionImplementations,
-  OperationReturn
+  ActionLocalTypes, ActionImplementations, OperationReturn
 } from '../type'
 import { localTypes as mutationLocalTypes, IMutations } from './mutations'
 
@@ -13,10 +11,7 @@ import { localTypes as mutationLocalTypes, IMutations } from './mutations'
  * Parameters type of `commit` are restricted by {@link IMutations}
  */
 type AugmentedActionContext = {
-  commit<K extends keyof IMutations> (
-    key: K,
-    payload: Parameters<IMutations[K]>[1]
-  ): ReturnType<IMutations[K]>
+  commit<K extends keyof IMutations> (key: K, payload: Parameters<IMutations[K]>[1]): ReturnType<IMutations[K]>
 } & Omit<ActionContext<State, StateInterface>, 'commit'>
 
 /**
@@ -43,10 +38,16 @@ export const localTypes: ActionLocalTypes<IActions> = {
  * Todo: How to do type guard for the return promising?
  */
 const actions: ActionImplementations<IActions, State> = {
-  ADD_AREA ({ commit, state }: AugmentedActionContext, rowData: AreaData) {
+  ADD_AREA ({
+    commit,
+    state
+  }: AugmentedActionContext, rowData: AreaData) {
     return new Promise((resolve) => {
       if (isExist(state, rowData.edgeID)) {
-        resolve({ result: false, message: 'Row is exist.' })
+        resolve({
+          result: false,
+          message: 'Row is exist.'
+        })
       } else {
         commit(mutationLocalTypes.ADD_AREA, rowData)
         resolve({ result: true })
@@ -56,7 +57,9 @@ const actions: ActionImplementations<IActions, State> = {
 }
 
 function isExist (state: State, id: string): boolean {
-  return !!(state.rows.find(row => { return row.edgeID === id }))
+  return !!(state.rows.find(row => {
+    return row.edgeID === id
+  }))
 }
 
 export default actions

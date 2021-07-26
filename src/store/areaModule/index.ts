@@ -14,8 +14,7 @@ const areaModule: AugmentedModule<State> = {
   actions,
   getters,
   mutations,
-  state,
-  // Vuex registers modules by their name
+  state, // Vuex registers modules by their name
   // Module name is also used as the namespace in global type.
   // TODO: How to avoid duplicate naming?
   name: 'area'

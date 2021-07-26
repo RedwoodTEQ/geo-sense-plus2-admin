@@ -52,5 +52,7 @@ export default class LeafletPage extends Vue {
 </script>
 
 <style>
-#mapid {height: 800px;}
+#mapid {
+  height: 800px;
+}
 </style>

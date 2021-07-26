@@ -1,34 +1,34 @@
 <template>
   <q-page class="">
     <div class="row q-col-gutter-sm q-ml-xs q-mr-sm q-py-sm">
-<!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
-<!--        <line-chart></line-chart>-->
-<!--      </div>-->
-<!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
-<!--        <bar-chart></bar-chart>-->
-<!--      </div>-->
+      <!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
+      <!--        <line-chart></line-chart>-->
+      <!--      </div>-->
+      <!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
+      <!--        <bar-chart></bar-chart>-->
+      <!--      </div>-->
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <pie-chart
-          :cardHeight = "cardHeight"
-          :theme = "theme"
-          :options = "pieChartOptions"
+          :cardHeight="cardHeight"
+          :theme="theme"
+          :options="pieChartOptions"
         ></pie-chart>
       </div>
-<!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
-<!--        <scatter-chart></scatter-chart>-->
-<!--      </div>-->
-<!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
-<!--        <dotted-bar-chart></dotted-bar-chart>-->
-<!--      </div>-->
-<!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
-<!--        <guage-chart></guage-chart>-->
-<!--      </div>-->
-<!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
-<!--        <boxplot></boxplot>-->
-<!--      </div>-->
-<!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
-<!--        <area-chart></area-chart>-->
-<!--      </div>-->
+      <!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
+      <!--        <scatter-chart></scatter-chart>-->
+      <!--      </div>-->
+      <!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
+      <!--        <dotted-bar-chart></dotted-bar-chart>-->
+      <!--      </div>-->
+      <!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
+      <!--        <guage-chart></guage-chart>-->
+      <!--      </div>-->
+      <!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
+      <!--        <boxplot></boxplot>-->
+      <!--      </div>-->
+      <!--      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">-->
+      <!--        <area-chart></area-chart>-->
+      <!--      </div>-->
     </div>
   </q-page>
 </template>
@@ -98,11 +98,26 @@ export default class EChartsPage extends Vue {
           show: false
         },
         data: [
-          { value: 1048, name: 'Search Engine' },
-          { value: 735, name: 'Direct access' },
-          { value: 580, name: 'Email marketing' },
-          { value: 484, name: 'Affiliate Advertising' },
-          { value: 300, name: 'Video ad' }
+          {
+            value: 1048,
+            name: 'Search Engine'
+          },
+          {
+            value: 735,
+            name: 'Direct access'
+          },
+          {
+            value: 580,
+            name: 'Email marketing'
+          },
+          {
+            value: 484,
+            name: 'Affiliate Advertising'
+          },
+          {
+            value: 300,
+            name: 'Video ad'
+          }
         ]
       }
     ]

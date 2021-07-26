@@ -53,25 +53,37 @@ export const loadCollectionSnapshot = (path: string, callbacks: ICollectionCallb
         switch (type) {
           case 'added':
             !!callbacks?.onAdded && callbacks.onAdded(deviceId, data)
-            break;
+            break
           case 'removed':
             !!callbacks?.onRemoved && callbacks.onRemoved(deviceId, data)
-            break;
+            break
           case 'modified':
             !!callbacks?.onModified && callbacks.onModified(deviceId, data)
-            break;
+            break
           default:
-            break;
+            break
         }
 
-        const floorplanId = data.EdgeMarkerRef
-          ? data.EdgeMarkerRef!.parent!.parent!.id
-          : ''
-        const deviceName: string = data.Name ? data.Name : '(not named)'
-        const assetRefNumber: number = data.AssetRefs ? data.AssetRefs.length : 0
-        const lastUpdateTime: string = data.LastUpdate
+        // const floorplanId = data.EdgeMarkerRef
+        //   ? data.EdgeMarkerRef!.parent!.parent!.id
+        //   : ''
+        // const deviceName: string = data.Name ? data.Name : '(not named)'
+        // const assetRefNumber: number = data.AssetRefs ? data.AssetRefs.length : 0
+        // const lastUpdateTime: string = data.LastUpdate
 
         // console.log('Change type: ', type, data, deviceId, floorplanId, deviceName, assetRefNumber, lastUpdateTime)
       })
+    })
+}
+
+export const addDocToCollectionSnapshot = (path: string, doc: any, callbacks: ICollectionCallbacks) => {
+  getCollectionRef(path)
+    .doc(doc.edgeID)
+    .set(doc)
+    .then(() => {
+      callbacks && callbacks.onComplete && callbacks.onComplete()
+    })
+    .catch(e => {
+      console.error(e)
     })
 }

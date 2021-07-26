@@ -4,7 +4,7 @@ import { State, AreaData } from './state'
 /**
  * Define essential getters
  */
-export interface IGetters <S = State> {
+export interface IGetters<S = State> {
   /**
    * Get count of areas
    * @param state {State}

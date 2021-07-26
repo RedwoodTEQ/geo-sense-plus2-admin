@@ -2,9 +2,7 @@ import { store } from 'quasar/wrappers'
 // eslint-disable-next-line no-unused-vars
 import { InjectionKey } from 'vue'
 import {
-  createStore,
-  useStore as vuexUseStore,
-  Store as VuexStore
+  createStore, useStore as vuexUseStore, Store as VuexStore
 } from 'vuex'
 
 /** Area module */

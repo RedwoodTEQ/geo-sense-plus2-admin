@@ -10,7 +10,7 @@
       </q-card-section>
       <q-card-section class="q-pa-none echarts">
         <!--Tag `<v-chart>` is defined in `boot/echarts.ts` as `VUEECharts`.-->
-        <v-chart class="chart" :option="option" />
+        <v-chart class="chart" :option="option"/>
       </q-card-section>
     </q-card>
   </q-page>
@@ -49,11 +49,26 @@ export default class EChartVuePage extends Vue {
         radius: '55%',
         center: ['50%', '40%'],
         data: [
-          { value: 335, name: 'Direct' },
-          { value: 310, name: 'Email' },
-          { value: 234, name: 'Ad Networks' },
-          { value: 135, name: 'Video Ads' },
-          { value: 1548, name: 'Search Engines' }
+          {
+            value: 335,
+            name: 'Direct'
+          },
+          {
+            value: 310,
+            name: 'Email'
+          },
+          {
+            value: 234,
+            name: 'Ad Networks'
+          },
+          {
+            value: 135,
+            name: 'Video Ads'
+          },
+          {
+            value: 1548,
+            name: 'Search Engines'
+          }
         ],
         emphasis: {
           itemStyle: {
