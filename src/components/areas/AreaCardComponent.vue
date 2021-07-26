@@ -1,3 +1,9 @@
+<!--
+Component: AreaCard
+Content: All fields of an area.
+Usage: Depending on passed parameter, it could be used to update an area, or add a new area.
+-->
+
 <template>
   <div id="area-card-container" class="row items-start hide-scrollbar">
       <q-card id="area-card" class="my-card" no-scroll flat bordered square>
@@ -13,23 +19,13 @@
             filled
             v-model="name"
             label="Area name *"
-            hint="Name"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Can not be empty']"
-        />
-        <q-input
-            filled
-            v-model="location"
-            label="Location *"
-            hint="Location"
             lazy-rules
             :rules="[ val => val && val.length > 0 || 'Can not be empty']"
         />
         <q-input
             filled
             v-model="floor"
-            label="Floor"
-            hint="Floor"
+            label="Floor *"
             lazy-rules
             :rules="[ val => val && val.length > 0 || 'Can not be empty']"
         />
@@ -37,11 +33,17 @@
             filled
             v-model="marker"
             label="Marker *"
-            hint="Marker"
             lazy-rules
             :rules="[ val => val && val.length > 0 || 'Can not be empty']"
         />
         <q-input
+            filled
+            v-model="location"
+            label="Location"
+            lazy-rules
+            :rules="[]"
+        />
+        <q-input style="padding-top:20px"
             filled
             v-model="remark"
             label="Remark"
@@ -176,7 +178,7 @@ export default class AreaCardComponent extends Vue.with(Props) {
     ['Edge Marker 01', 'Edge Marker 02', 'Edge Marker 03']
   ))
 
-  quasar = useQuasar()
+  $q = useQuasar()
 
   mounted () {
     componentLog.info('Area card component mounted >>')
@@ -188,11 +190,19 @@ export default class AreaCardComponent extends Vue.with(Props) {
   }
 
   onSubmit () {
-    this.quasar.notify({
+    this.$q.notify({
       color: 'green-4',
       textColor: 'white',
       icon: 'cloud_done',
       message: 'Submitted'
+    })
+
+    // Todo: The same type with `AreasPage.vue#addToStore`
+    this.$emit('submit-area', {
+      AssetRefs: ['1918FC01FS1', '1918FC01F1FF'],
+      EdgeMarkerRef: { path: '/floorplanSelectionOptions/abc/efc' },
+      Name: 'areaMarkup',
+      Remark: 'This is remark.'
     })
   }
 

@@ -26,8 +26,8 @@
             </template>
           </q-input>
           <q-space />
-          <q-btn color="primary" size="ms" :disable="loading" label="Add row" @click="addRow" />
-          <q-btn class="q-ml-sm" color="red" size="ms" :disable="loading" label="Remove row" @click="removeRow" />
+          <q-btn color="primary" size="ms" :disable="loading" label="Add Area" @click="toggleEdit(true)" />
+          <q-btn class="q-ml-sm" color="red" size="ms" :disable="loading" label="Remove Area" @click="removeArea" />
         </template>
       </q-table>
     </div>
@@ -36,7 +36,9 @@
         @hide="toggleEdit(false)"
         no-scroll no-scrollbar
     >
-      <AreaCard />
+      <AreaCard
+        @submit-area="submitArea"
+      ></AreaCard>
     </q-dialog>
   </q-page>
 </template>
@@ -92,14 +94,6 @@ export default class AreasPage extends Vue {
   loading = setup<Ref<boolean>>(() => ref(false))
   showEdit = setup<Ref<boolean>>(() => ref(false))
 
-  // editName = setup<Ref<string>>(() => ref(''))
-  // editRemark = setup<Ref<string>>(() => ref(''))
-  // editLocation = setup<Ref<string>>(() => ref(''))
-  // editFloor = setup<Ref<string>>(() => ref(''))
-  // editMarker = setup<Ref<string>>(() => ref(''))
-
-  // $q = useQuasar()
-
   /**
    * Columns data from DB
    * Alternative approach to create computed property, comparing to `@options#rows`
@@ -141,16 +135,14 @@ export default class AreasPage extends Vue {
   mounted () {
     pageLog.info('AreasPage mounted.')
 
-    // // Can use `this.$store`
-    // console.log('this.$store:', this.$store)
-
+    /** Fetch options */
     const options: FirebaseOptions = {
       category: DatabaseCategory.Firebase,
       path: 'edges',
       callbacks: {
         onAdded: (id, data: IAreaDataFirebase) => {
           pageLog.info({ msg: 'Added', data: id })
-          this.addArea(id, data)
+          this.addToStore(id, data)
         },
         onModified: (id, data) => {
           pageLog.info({ msg: 'Modified', data: id })
@@ -162,6 +154,7 @@ export default class AreasPage extends Vue {
         }
       }
     }
+    /** Fetch areas */
     this.apiManager.fetch<DatabaseCategory.Firebase>(options)
   }
 
@@ -169,8 +162,11 @@ export default class AreasPage extends Vue {
     pageLog.info('AreasPage init.')
   }
 
-  addArea (id: string, data: IAreaDataFirebase) {
-    console.log('addArea >> moduleName: ', this.moduleName)
+  /**
+   * Add fetched area data to store
+   */
+  addToStore (id: string, data: IAreaDataFirebase) {
+    console.log('addToTable >> moduleName: ', this.moduleName)
 
     const type = getGlobalType(areaActionLocalTypes.ADD_AREA, moduleNames.area)
 
@@ -184,14 +180,14 @@ export default class AreasPage extends Vue {
       return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}` // Leading zeros for mm and dd
     }
 
-    // Todo: Type guard of payload of dispatch.
-    // Using module IActions's playload type as generic type.
+    // Todo: Type guard of payload of dispatch. Consider optional properties.
+    // Using module IActions's payload type as generic type.
     this.$store.dispatch(type, {
       edgeID: id,
       name: data.Name,
-      floor: data.EdgeMarkerRef.path,
-      assetsCount: data.AssetRefs.length,
-      lastUpdated: formatData(data.LastUpdate.toDate())
+      floor: data.EdgeMarkerRef?.path || '',
+      assetsCount: data.AssetRefs?.length || 0,
+      lastUpdated: data.LastUpdate ? formatData(data.LastUpdate.toDate()) : '-'   // Should not be optional property.
     })
       .then(result => {
         console.log(result)
@@ -201,17 +197,33 @@ export default class AreasPage extends Vue {
       })
   }
 
-  addRow () {
-    this.toggleEdit(true)
-    console.log('TODO add row')
-  }
-
+  /**
+   * Toggle area card component for editing.
+   */
   toggleEdit (toggle: boolean) {
     this.showEdit = toggle
     this.loading = toggle
   }
 
-  removeRow () {
+  submitArea (area: any) {
+    console.log('AreasPage >> receive submitArea event, area ', area)
+    const options: FirebaseOptions = {
+      category: DatabaseCategory.Firebase,
+      path: 'edges',
+      callbacks: {
+        onComplete: () => {
+          console.log('Post completed!')
+        }
+      }
+    }
+    this.apiManager.post<DatabaseCategory.Firebase>(options, area)
+  }
+
+  testEmit () {
+    console.log('Test emit')
+  }
+
+  removeArea () {
     console.log('TODO remove row')
   }
 }
